@@ -114,7 +114,7 @@ public class NameGUI extends JFrame implements ActionListener
 				i++;
 				System.out.println("Index: " + i);
 			
-				Player p = new Player(nameEntry.getText(), (String) (r.getSelectedItem()));
+				Player p = new Player(nameEntry.getText(), (String) (roleList.getSelectedItem()));
 				
 				if (!inPlayerList(p))
 				{
