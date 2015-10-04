@@ -166,11 +166,13 @@ public class NameGUI extends JFrame implements ActionListener
 			}
 			System.out.println(names);
 			readyToProceed = true;
+			DayGUI day = new DayGUI(names);
+			day.setVisible(true);
 			
 		}
 //		else if (evt.getActionCommand().equals("role") && c != 0)
 //		{
-//			JComboBox cb = (JComboBox) evt.getSource();
+//			JComboBox cb = (JComboBox) evt.getxSource();
 //			Player p = new Player(nameEntry.getText(), (String) (cb.getSelectedItem()));
 //			System.out.println(names.contains(p));
 //			if (!names.contains(p))
