@@ -21,7 +21,7 @@ public class NameGUI extends JFrame implements ActionListener
 	JLabel j;
 	JButton next;
 	JComboBox roleList;
-	String[] roles = {"Werewolf", "Seer", "Bodyguard", "Villager", "PI", "Cupid", "Hunter", "Vampire"};
+	String[] roles = {"Werewolf", "Seer", "Bodyguard", "Villager"}; //, "PI", "Cupid", "Hunter", "Vampire"};
 	ArrayList<String> roleAL = new ArrayList<String>();
 	boolean readyToProceed = false;
 	

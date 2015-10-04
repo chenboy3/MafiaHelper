@@ -37,11 +37,25 @@ public class MafiaHelper
 		return n.getNames();
 	}
 	
+	public ArrayList<Player> night(ArrayList<Player> p) 
+	{
+		NightGUI night = new NightGUI(p);
+		night.setSize(350, 500);
+		night.setVisible(true);
+		while(!night.ready())
+		{
+			System.out.println(time++);
+		}
+		night.dispose();
+		return night.updatePlayers();
+	}
+	
 	public static void main (String[] args)
 	{
 		MafiaHelper m = new MafiaHelper();
 		players = m.getPlayers();
 		playerList = m.getNames(players);
+		System.out.println(m.night(playerList));
 		
 	}
 }
