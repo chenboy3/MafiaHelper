@@ -27,9 +27,14 @@ public class MafiaHelper
 	public ArrayList<Player> getNames(int p) 
 	{
 		NameGUI n = new NameGUI(p);
-		n.setSize(2000, 2000);
+		n.setSize(450, 200);
 		n.setVisible(true);
-		return new ArrayList<Player>();
+		while(!n.getReadyToProceed())
+		{
+			System.out.println(time++);
+		}
+		n.dispose();
+		return n.getNames();
 	}
 	
 	public static void main (String[] args)

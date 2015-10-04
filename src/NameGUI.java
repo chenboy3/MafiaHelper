@@ -17,15 +17,18 @@ public class NameGUI extends JFrame implements ActionListener
 	JTextField nameEntry = new JTextField(20);
 	ArrayList<Player> names;
 	int i = 1;
+	int ps;
 	JLabel j;
+	JButton next;
 	JComboBox roleList;
 	String[] roles = {"Werewolf", "Seer", "Bodyguard", "Villager", "PI", "Cupid", "Hunter", "Vampire"};
 	ArrayList<String> roleAL = new ArrayList<String>();
+	boolean readyToProceed = false;
 	
 	public NameGUI( int players)
 	{
 		names = new ArrayList<Player> (players);
-		
+		ps = players;
 		for (int e = 0; e < roles.length; e++)
 		{
 			roleAL.add(roles[e]);
@@ -35,7 +38,7 @@ public class NameGUI extends JFrame implements ActionListener
 
 		nameEntry.addActionListener(this);
 
-		JButton next = new JButton(">>>");
+		next = new JButton(">>>");
 		next.addActionListener(this);
 		next.setActionCommand("right");
 		
@@ -77,12 +80,16 @@ public class NameGUI extends JFrame implements ActionListener
 		}
 		return result;
 	}
+	
+	public boolean getReadyToProceed()
+	{
+		return readyToProceed;
+	}
 
 	public void actionPerformed(ActionEvent evt)
 	{
 		int c = nameEntry.getText().length();
 		int d;
-		System.out.println(evt.getActionCommand());
 		
 		if (evt.getActionCommand().equals("left"))
 		{
@@ -97,10 +104,10 @@ public class NameGUI extends JFrame implements ActionListener
 					}
 						i--; // decrement i, we're going left
 						j.setText("Player " + i + "'s name: "); // adjust name box accordingly
-						System.out.println(i); // debug
 						nameEntry.setText(names.get(i-1).getName()); // get previous name
 						d = roleAL.indexOf(names.get(i-1).getRole());
 						roleList.setSelectedIndex(d);
+						System.out.println(names);
 						repaint();
 					
 				}
@@ -108,33 +115,58 @@ public class NameGUI extends JFrame implements ActionListener
 		}
 		else if (evt.getActionCommand().equals("right"))
 		{
-			System.out.println(names);
 			if (c != 0)
 			{
 				i++;
-				System.out.println("Index: " + i);
-			
-				Player p = new Player(nameEntry.getText(), (String) (r.getSelectedItem()));
-				
-				if (!inPlayerList(p))
+				if (i != ps)
 				{
-					names.add(p);
-				}
-				if (names.size() < i)
-				{
+					Player p = new Player(nameEntry.getText(), (String) (roleList.getSelectedItem()));
+					
+					if (!inPlayerList(p))
+					{
+						names.add(p);
+					}
+					if (names.size() < i) // new term
+					{
+							j.setText("Player " + i + "'s name: ");
+							nameEntry.setText("");
+							roleList.setSelectedIndex(0);
+							repaint();
+							System.out.println(names);
+					}
+					else
+					{
 						j.setText("Player " + i + "'s name: ");
-						nameEntry.setText("");
-						roleList.setSelectedIndex(0);
+						nameEntry.setText(names.get(i-1).getName());
+						d = roleAL.indexOf(names.get(i-1).getRole());
+						roleList.setSelectedIndex(d);
+						repaint();
+						System.out.println(names);
+					}
 				}
-				else
+				else // now on last term
 				{
 					j.setText("Player " + i + "'s name: ");
-					nameEntry.setText(names.get(i-1).getName());
-					d = roleAL.indexOf(names.get(i-1).getRole());
-					roleList.setSelectedIndex(d);
+					nameEntry.setText("");
+					roleList.setSelectedIndex(0);
+					next.setText("Go!");
+					next.setActionCommand("Ready");
 					repaint();
+					System.out.println(names);
 				}
 			}
+		}
+		else if (evt.getActionCommand().equals("Ready"))
+		{
+			Player p = new Player(nameEntry.getText(), (String) (roleList.getSelectedItem()));
+			
+			if (!inPlayerList(p))
+			{
+				names.add(p);
+			}
+			System.out.println(names);
+			readyToProceed = true;
+			
 		}
 //		else if (evt.getActionCommand().equals("role") && c != 0)
 //		{
